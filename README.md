@@ -1,2 +1,2 @@
 # cookiecutter-memote
-A cookiecuttter template for memote model repositories
+A cookiecuttter template for memote model repositories.
