@@ -1,5 +1,6 @@
 import os
 import shutil
+from os.path import basename
 
 # from cookiecutter import config
 # print(config.DEFAULT_CONFIG)
@@ -13,4 +14,4 @@ if model_path != 'default':
     if not os.path.isabs(model_path):
         raise ValueError('You need to provide an absolute path to the model.')
     else:
-        shutil.copyfile(model_path, './model.xml')
+        shutil.copyfile(model_path, basename(model_path))
