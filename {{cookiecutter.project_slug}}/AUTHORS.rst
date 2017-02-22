@@ -2,7 +2,7 @@
 Credits
 =======
 
-Development Lead
+Model Maintainer
 ----------------
 
 * {{ cookiecutter.full_name }} <{{ cookiecutter.email }}>
