@@ -1,0 +1,3 @@
+git+https://github.com/opencobra/cobrapy.git@memote-fixes#egg=cobra
+git+https://github.com/biosustain/memote.git
+tox
