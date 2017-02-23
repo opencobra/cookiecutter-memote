@@ -13,10 +13,11 @@ addons:
     - libglpk-dev
     - glpk-utils
 
+before_install:
+  - travis_retry pip install -U pip setuptools wheel
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 # travis_retry may overcome some poor network conditions
 install:
-  - travis_retry pip install -U pip setuptools wheel
   - travis_retry pip install -U -r requirements.in
 
 # command to run tests, e.g. python setup.py test

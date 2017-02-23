@@ -1,12 +1,18 @@
 language: python
+sudo: false
+git:
+  depth: 1
 
-python: 3.4
-env:
-  - TOXENV=py27
-  - TOXENV=py35
+matrix:
+  include:
+  - python: 2.7
+    env: TOXENV=py27
+  - python: 3.5
+    env: TOXENV=py35
 
+before_install:
+  - travis_retry pip install -U pip setuptools wheel
 install:
-  - pip install -U tox
-
+  - travis_retry pip install -U tox
 script:
-  - tox
+  - travis_wait tox -e "${TOXENV}"
