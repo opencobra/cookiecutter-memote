@@ -8,5 +8,5 @@
 	"release_date": "{% now 'local' %}",
 	"year": "{{ cookiecutter.release_date[:4] }}",
 	"version": "0.1.0",
-	"model": "default"
+	"model": "model.xml"
 }
