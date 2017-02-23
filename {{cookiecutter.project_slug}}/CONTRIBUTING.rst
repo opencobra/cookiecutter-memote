@@ -12,19 +12,19 @@ You can contribute in many ways:
 Types of Contributions
 ----------------------
 
-Report Bugs
-~~~~~~~~~~~
+Report Problems
+~~~~~~~~~~~~~~~
 
-Report bugs at https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/issues.
+Report problems with the metabolic model at https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/issues.
 
-If you are reporting a bug, please include:
+If you are reporting a problem, please include:
 
 * Your operating system name and version.
-* Any details about your local setup that might be helpful in troubleshooting.
-* Detailed steps to reproduce the bug.
+* Any details about your local setup that might be helpful in troubleshooting, such as cobrapy version, memote version.
+* Detailed steps to reproduce the problem.
 
-Fix Bugs
-~~~~~~~~
+Fix Problems
+~~~~~~~~~~~~
 
 Look through the GitHub issues for bugs. Anything tagged with "bug"
 is open to whoever wants to implement it.
@@ -68,7 +68,7 @@ Ready to contribute? Here's how to set up `{{ cookiecutter.project_slug }}` for 
 
     $ mkvirtualenv {{ cookiecutter.project_slug }}
     $ cd {{ cookiecutter.project_slug }}/
-    $ python setup.py develop
+    $ pip install -e .
 
 4. Create a branch for local development::
 
@@ -76,13 +76,9 @@ Ready to contribute? Here's how to set up `{{ cookiecutter.project_slug }}` for 
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8 and the tests, including testing other Python versions with tox::
+5. When you're done making changes, check that your changes pass the memote test suite::
 
-    $ flake8 {{ cookiecutter.project_slug }} tests
-    $ python setup.py test
-    $ tox
-
-   To get flake8 and tox, just pip install them into your virtualenv.
+    $ memote {{ cookiecutter.project_slug }}
 
 6. Commit your changes and push your branch to GitHub::
 
@@ -97,17 +93,4 @@ Pull Request Guidelines
 
 Before you submit a pull request, check that it meets these guidelines:
 
-1. The pull request should include tests.
-2. If the pull request adds functionality, the docs should be updated. Put
-   your new functionality into a function with a docstring, and add the
-   feature to the list in README.rst.
-3. The pull request should work for Python 2.6, 2.7, 3.3, 3.4 and 3.5, and for PyPy. Check
-   https://travis-ci.org/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/pull_requests
-   and make sure that the tests pass for all supported Python versions.
-
-Tips
-----
-
-To run a subset of tests::
-
-    $ python -m unittest tests.test_{{ cookiecutter.project_slug }}
+1. The pull request should pass the memote test suite.
