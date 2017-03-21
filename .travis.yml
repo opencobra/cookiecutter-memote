@@ -13,6 +13,6 @@ matrix:
 before_install:
   - travis_retry pip install -U pip setuptools wheel
 install:
-  - travis_retry pip install -U tox jinja2-ospath
+  - travis_retry pip install -U tox
 script:
   - travis_wait tox -e "${TOXENV}"
