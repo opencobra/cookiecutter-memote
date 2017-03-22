@@ -15,6 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import absolute_import
+
 import logging
 import io
 import os
@@ -61,7 +63,7 @@ for name in entries:
 os.mkdir("Results")
 io.open("Results/.keep", "a").close()  # touch
 with io.open("index.html", "w") as file_h:
-    file_h.write("Soon this will be a sleek model report.\n")
+    file_h.write(u"Soon this will be a sleek model report.\n")
 repo.index.add(["Results", "index.html"])
 repo.index.commit("basic gh-pages structure.")
 pages.checkout("master")
