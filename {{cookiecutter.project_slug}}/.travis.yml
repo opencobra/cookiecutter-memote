@@ -2,7 +2,7 @@ language: python
 sudo: false
 python: 3.5
 cache:
-  - pip: true
+  pip: true
 addons:
   apt:
     packages:
@@ -29,4 +29,4 @@ deploy:
   script: scripts/deploy.sh
   on:
     branch: master
-    condition: "${TRAVIS_REPO_SLUG}" == "{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
+    condition: "${TRAVIS_REPO_SLUG} == {{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
