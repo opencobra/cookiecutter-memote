@@ -27,17 +27,9 @@ if [[ "${model_path}" != "model.xml" ]]; then
 fi
 
 # set up repository
-set +e
-github_email=$(git config user.email)
-if [[ $? != 0 ]];then
-    git config --global user.email "{{ cookiecutter.email }}"
-fi
-github_name=$(git config user.name)
-if [[ $? != 0 ]];then
-    git config --global user.name "{{ cookiecutter.full_name }}"
-fi
-set -e
 git init
+git config user.email "{{ cookiecutter.email }}"
+git config user.name "{{ cookiecutter.full_name }}"
 git add "." > /dev/null
 git commit -m "feat: add initial structure for the model repository"
 
