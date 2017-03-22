@@ -36,7 +36,9 @@ git commit -m "feat: add initial structure for the model repository"
 # setup up deploy branch
 deploy_branch="gh-pages"
 
-git checkout --orphan "${deploy_branch}" > /dev/null
+# TODO: orphan causing problems
+#git checkout --orphan "${deploy_branch}" > /dev/null
+git checkout "${deploy_branch}" > /dev/null
 git rm -r --cached "." > /dev/null
 old_ignore=${GLOBIGNORE}
 GLOBIGNORE=".git"
