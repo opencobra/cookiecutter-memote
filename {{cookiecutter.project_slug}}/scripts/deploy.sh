@@ -3,11 +3,18 @@
 # do NOT set -v or your GitHub API token will be leaked!
 set -e # exit with nonzero exit code if anything fails
 
-echo "Starting deploy to ${DEPLOY_BRANCH}..."
+source_branch="master"
+
+if [[ "${TRAVIS_PULL_REQUEST}" != "false" || "${TRAVIS_BRANCH}" != "${source_branch}" || "${TRAVIS_REPO_SLUG}" != "{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"]]; then
+    echo "Skip deploy."
+    exit 0
+else
+  echo "Starting deploy to ${DEPLOY_BRANCH}..."
+fi
 
 # configure git
 git config --global user.email "deploy@travis-ci.org"
-git config --global user.name "Deployment Bot"
+git config --global user.name "Travis CI Deployment Bot"
 
 # clone the deploy branch
 cd "${HOME}"

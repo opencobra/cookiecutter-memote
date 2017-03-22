@@ -26,11 +26,6 @@ script:
   - git checkout master
   - memote
 
-# automatic deploys to 'gh-pages' only happen on commits not PRs to 'master'
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: scripts/deploy.sh
-  on:
-    branch: master
-    condition: "${TRAVIS_REPO_SLUG} == {{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
+# Changed from 'deploy' to 'after_script' so that we deploy even after failures.
+after_script:
+  - scripts/deploy.sh
