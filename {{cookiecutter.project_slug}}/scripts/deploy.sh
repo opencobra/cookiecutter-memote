@@ -5,7 +5,7 @@ set -e # exit with nonzero exit code if anything fails
 
 source_branch="master"
 
-if [[ "${TRAVIS_PULL_REQUEST}" != "false" || "${TRAVIS_BRANCH}" != "${source_branch}" || "${TRAVIS_REPO_SLUG}" != "{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"]]; then
+if [[ "${TRAVIS_PULL_REQUEST}" != "false" || "${TRAVIS_BRANCH}" != "${source_branch}" || "${TRAVIS_REPO_SLUG}" != "{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}" ]]; then
     echo "Skip deploy."
     exit 0
 else
