@@ -28,30 +28,40 @@ fi
 
 # set up repository
 git init
-git add "."
+git add "." > /dev/null
 git commit -m "feat: add initial structure for the model repository"
 
 # setup up deploy branch
 deploy_branch="gh-pages"
 
-git checkout --orphan "${deploy_branch}"
-git rm --cached *
-rm -rf *
-rm -f ".gitignore" ".travis.yml"
-git add --all "."
-git commit -m "feat: add clean ${deploy_branch} deploy branch"
-
+git checkout --orphan "${deploy_branch}" > /dev/null
+git rm -r --cached "." > /dev/null
+old_ignore=${GLOBIGNORE}
+GLOBIGNORE=".git"
+rm -rf * .*
+GLOBIGNORE=${old_ignore}
 mkdir "Results"
 touch "Results/.keep"
 echo "Soon this will be a sleek model report." > "index.html"
-git add "Results" "index.html"
-git commit -m "feat: add initial `${deploy_branch}` structure"
+git add --all "."
+git commit -m "feat: add initial \`${deploy_branch}\` structure"
 
-# add and push to remote
+# Add and push to remote. These commands are allowed to fail in case the remote
+# is not set up yet.
+set +e
 # Push the deploy branch first since master push will trigger travis and require
 # the deploy branch.
-git remote add "git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git"
-git push -u "origin" "${deploy_branch}"
-
-git checkout "master"
-git push -u "origin" "master"
+git remote add "origin" "git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git"
+git push -u "origin" "${deploy_branch}" > /dev/null
+if [[ $? != 1 ]];then
+    echo "Please create a repository on 'https://github.com' under your account '{{ cookiecutter.github_username }}' and project name '{{ cookiecutter.project_slug }}'."
+    echo "Then:"
+    echo "1. cd {{ cookiecutter.project_slug }}"
+    echo "2. git checkout ${deploy_branch}"
+    echo "3. git push -u origin ${deploy_branch}"
+    echo "4. git checkout master"
+    echo "5. git push -u origin master"
+else
+    git checkout "master"
+    git push -u "origin" "master" > /dev/null
+fi
