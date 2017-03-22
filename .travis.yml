@@ -3,6 +3,10 @@ sudo: false
 git:
   depth: 1
 
+branches:
+  only:
+    - master
+
 matrix:
   include:
   - python: 2.7

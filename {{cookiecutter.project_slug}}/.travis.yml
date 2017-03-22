@@ -1,10 +1,8 @@
 language: python
 sudo: false
 python: 3.5
-git:
-  depth: 1
 cache:
-  - pip: true
+  pip: true
 addons:
   apt:
     packages:
@@ -12,13 +10,22 @@ addons:
     - libxml2-dev
     - libglpk-dev
     - glpk-utils
+git:
+  depth: 2000
+env:
+  - DEPLOY_BRANCH="gh-pages"
 
 before_install:
-  - travis_retry pip install -U pip setuptools wheel
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 # travis_retry may overcome some poor network conditions
+  - travis_retry pip install -U pip setuptools wheel
 install:
   - travis_retry pip install -U -r requirements.in
 
-# command to run tests, e.g. python setup.py test
-script: travis_wait tox -e suite
+# as set up in 'memote.ini' this will create a JSON file in Results
+script:
+  - git checkout master
+  - memote
+
+# Changed from 'deploy' to 'after_script' so that we deploy even after failures.
+after_script:
+  - scripts/deploy.sh
