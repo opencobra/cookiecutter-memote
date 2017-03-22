@@ -38,7 +38,7 @@ deploy_branch="gh-pages"
 
 # TODO: orphan causing problems
 #git checkout --orphan "${deploy_branch}" > /dev/null
-git checkout "${deploy_branch}" > /dev/null
+git checkout -b "${deploy_branch}" > /dev/null
 git rm -r --cached "." > /dev/null
 old_ignore=${GLOBIGNORE}
 GLOBIGNORE=".git"
