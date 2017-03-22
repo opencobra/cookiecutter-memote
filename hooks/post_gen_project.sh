@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -ev
+set -e
 
 # copy the model file
 model_path="{{ cookiecutter.model }}"
@@ -27,10 +27,16 @@ if [[ "${model_path}" != "model.xml" ]]; then
 fi
 
 # set up repository
+set +e
 github_email=$(git config user.email)
+if [[ $? != 0 ]];then
+    git config --global user.email "{{ cookiecutter.email }}"
+fi
 github_name=$(git config user.name)
-git config --global user.email "${github_email:-{{ cookiecutter.email }}}"
-git config --global user.name "${github_name:-{{ cookiecutter.full_name }}}"
+if [[ $? != 0 ]];then
+    git config --global user.name "{{ cookiecutter.full_name }}"
+fi
+set -e
 git init
 git add "." > /dev/null
 git commit -m "feat: add initial structure for the model repository"
