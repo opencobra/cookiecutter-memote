@@ -20,7 +20,9 @@ install:
   - travis_retry pip install -U -r requirements.in
 
 # as set up in 'memote.ini' this will create a JSON file in Results
-script: memote
+script:
+  - git checkout master
+  - memote
 
 # automatic deploys to 'gh-pages' only happen on commits not PRs to 'master'
 deploy:
