@@ -2,7 +2,8 @@ language: python
 sudo: false
 git:
   depth: 1
-branch:
+
+branches:
   only:
     - master
 
