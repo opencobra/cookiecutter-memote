@@ -27,6 +27,10 @@ if [[ "${model_path}" != "model.xml" ]]; then
 fi
 
 # set up repository
+github_email=$(git config user.email)
+github_name=$(git config user.name)
+git config --global user.email "${github_email:-{{ cookiecutter.email }}}"
+git config --global user.name "${github_name:-{{ cookiecutter.full_name }}}"
 git init
 git add "." > /dev/null
 git commit -m "feat: add initial structure for the model repository"
@@ -46,13 +50,9 @@ echo "Soon this will be a sleek model report." > "index.html"
 git add --all "."
 git commit -m "feat: add initial \`${deploy_branch}\` structure"
 
-# Add and push to remote. These commands are allowed to fail in case the remote
-# is not set up yet.
-set +e
 # Push the deploy branch first since master push will trigger travis and require
 # the deploy branch.
 git remote add "origin" "git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git"
-git push -u "origin" "${deploy_branch}" > /dev/null
 if [[ $? != 1 ]];then
     echo "Please create a repository on 'https://github.com' under your account '{{ cookiecutter.github_username }}' and project name '{{ cookiecutter.project_slug }}'."
     echo "Then:"
@@ -60,8 +60,8 @@ if [[ $? != 1 ]];then
     echo "2. git checkout ${deploy_branch}"
     echo "3. git push -u origin ${deploy_branch}"
     echo "4. git checkout master"
-    echo "5. git push -u origin master"
-else
-    git checkout "master"
-    git push -u "origin" "master" > /dev/null
+    echo "5. Enable your repository on Travis CI."
+    echo "6. Learn how to create a secure variable for Travis CI (https://docs.travis-ci.com/user/deployment/pages/#Setting-the-GitHub-token) and add it to your project settings or edit the \`.travis.yml\` file."
+
+    echo "7. git push -u origin master"
 fi
