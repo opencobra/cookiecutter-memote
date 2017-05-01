@@ -30,6 +30,9 @@ fi
 git init
 git config user.email "{{ cookiecutter.email }}"
 git config user.name "{{ cookiecutter.full_name }}"
+# deploy hoooks
+mv "pre-commit" ".git/hooks/"
+
 git add "." > /dev/null
 git commit -m "feat: add initial structure for the model repository"
 
