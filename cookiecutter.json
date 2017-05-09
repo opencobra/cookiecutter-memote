@@ -1,13 +1,13 @@
 {
-	"full_name": "Nikolaus Sonnenschein",
-	"email": "niko.sonnenschein@gmail.com",
-	"github_username": "phantomas1234",
-	"project_name": "Memote model repository",
-	"project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
-	"project_short_description": "Create a repository for a genome-scale metabolic model.",
-	"release_date": "{% now 'local' %}",
-	"year": "{{ cookiecutter.release_date[:4] }}",
-	"version": "0.1.0",
-	"model": "model.xml",
-        "_extensions": ["jinja2_ospath.OSPathExtension"]
+    "full_name": "main model author",
+    "email": "author@place.edu",
+    "github_username": "authorname",
+    "project_name": "Memote model repository",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
+    "project_short_description": "Create a repository for maintaining a genome-scale metabolic model.",
+    "release_date": "{% now 'local' %}",
+    "year": "{{ cookiecutter.release_date[:4] }}",
+    "version": "0.1.0",
+    "model": "default",
+    "_extensions": ["jinja2_ospath.OSPathExtension"]
 }

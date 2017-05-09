@@ -19,7 +19,7 @@ set -e
 
 # copy the model file
 model_path="{{ cookiecutter.model }}"
-if [[ "${model_path}" != "model.xml" ]]; then
+if [[ "${model_path}" != "default" ]]; then
     target=$(basename "${model_path}")
     echo "copying '${model_path}' -> '${target}'"
     cp "${model_path}" "${target}"
