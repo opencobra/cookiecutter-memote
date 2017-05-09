@@ -3,6 +3,8 @@
 Congratulations! You successfully set up your genome-scale metabolic model
 repository.
 
+**N.B.:** This README is currently out-dated.
+
 ## Next steps:
 
 1. Update this README to your liking and to say something about the model that

@@ -22,7 +22,7 @@ from os.path import isabs, exists, isfile
 MODEL_PATH = "{{ cookiecutter.model }}"
 
 
-if MODEL_PATH != "model.xml":
+if MODEL_PATH != "default":
     if not (isabs(MODEL_PATH) and exists(MODEL_PATH) and isfile(MODEL_PATH)):
         raise ValueError(
             "'model' value must be an absolute path to an existing file;"
