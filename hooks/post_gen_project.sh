@@ -33,7 +33,7 @@ git config user.name "{{ cookiecutter.full_name }}"
 # deploy hoooks
 mv "pre-commit" ".git/hooks/"
 
-git add "." > /dev/null
+git add "." > "/dev/null"
 git commit -m "feat: add initial structure for the model repository"
 
 # setup up deploy branch
@@ -52,6 +52,7 @@ touch "Results/.keep"
 echo "Soon this will be a sleek model report." > "index.html"
 git add --all "."
 git commit -m "feat: add initial \`${deploy_branch}\` structure"
+git checkout "master" > "/dev/null"
 
 # Push the deploy branch first since master push will trigger travis and require
 # the deploy branch.
