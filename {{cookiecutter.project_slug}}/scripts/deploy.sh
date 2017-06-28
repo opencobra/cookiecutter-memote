@@ -18,7 +18,7 @@ git config --global user.name "Travis CI Deployment Bot"
 
 # clone the deploy branch
 cd "${HOME}"
-git clone --quiet --branch=${DEPLOY_BRANCH} https://${GITHUB_API_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git ${DEPLOY_BRANCH} > /dev/null
+git clone --quiet --branch=${DEPLOY_BRANCH} https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git ${DEPLOY_BRANCH} > /dev/null
 
 # copy the results from the current memote run to deploy dir
 cp "${TRAVIS_BUILD_DIR}/Results/${TRAVIS_COMMIT}.json" "${HOME}/${DEPLOY_BRANCH}/Results/"
