@@ -57,15 +57,3 @@ git checkout "master" > "/dev/null"
 # Push the deploy branch first since master push will trigger travis and require
 # the deploy branch.
 git remote add "origin" "git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git"
-if [[ $? != 1 ]];then
-    echo "Please create a repository on 'https://github.com' under your account '{{ cookiecutter.github_username }}' and project name '{{ cookiecutter.project_slug }}'."
-    echo "Then:"
-    echo "1. cd {{ cookiecutter.project_slug }}"
-    echo "2. git checkout ${deploy_branch}"
-    echo "3. git push -u origin ${deploy_branch}"
-    echo "4. git checkout master"
-    echo "5. Enable your repository on Travis CI."
-    echo "6. Learn how to create a secure variable for Travis CI (https://docs.travis-ci.com/user/deployment/pages/#Setting-the-GitHub-token) and add it to your project settings or edit the \`.travis.yml\` file."
-
-    echo "7. git push -u origin master"
-fi

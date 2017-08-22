@@ -3,59 +3,26 @@
 Congratulations! You successfully set up your genome-scale metabolic model
 repository.
 
-**N.B.:** This README is currently out-dated.
-
-## Next steps:
+## Next Steps
 
 1. Update this README to your liking and to say something about the model that
    you are working on.
 2. Take note of the [license](LICENSE) in case you want to change it.
-3. If you want to test your model locally, i.e., on your own computer then you
-   will have to learn or know a little bit about Python package management. Even
-   though it is more of a hassle to set up, local testing will be much faster
-   and give you more immediate feedback on your model-building efforts. We
-   therefore highly recommend it. In addition, or alternatively, you can have
-   automatic testing for the changes committed on GitHub. Please refer to the
-   section on Travis CI for that. If you only rely on Travis you are done now.
-   Enjoy working on your metabolic model! If you want a local setup keep on
-   reading.
-4. We recommend some kind of virtual environment for Python. We describe two
-   common options in the section on virtualenv. Once you have one set up you can
-   get up and running by simply typing:
-   ```
-   pip install -U -r requirements.in
-   ```
-5. You can then run the following command to get an impression of your model
-   state:
-   ```
-   tox
-   ```
-   This will run all model tests and give you an overview. It will also generate
-   a report from the tests. Individually, the commands are:
-   ```
-   tox -e suite
-   ```
-   to only run the tests and:
-   ```
-   tox -e report
-   ```
-   to run the tests and generate a report.
+3. Check out the [memote documentation](http://memote.readthedocs.io/) online.
 
-## virtualenv
+## Usage
 
-Link some venv, virtualenv, conda tutorials here.
+All `memote` commands have extensive help descriptions.
 
-## Travis CI
+1. For simple command line testing, check out `memote run -h`.
+2. To generate a pretty report, check out `memote report snapshot -h`.
 
-Automatic model testing is enabled via memote and Travis CI. In order for this
-to work as expected please:
+## Testing the Model with Continuous Integration
 
-1. Create an account on https://travis-ci.org using your GitHub account.
-2. Enable your model repository for testing on Travis.
-3. Commit some changes to your repository.
-3. Enjoy continuous integration for your model!
+Currently, we can enable continuous model testing using Travis CI. All you have
+to do is:
 
-## git and GitHub
+1. Create a [GitHub](https://github.com/) account.
+2. Create an account at https://travis-ci.org using your GitHub account.
+3. Run `memote online`.
 
-You will need to learn some git basics in order to properly record changes and
-interact with GitHub.
