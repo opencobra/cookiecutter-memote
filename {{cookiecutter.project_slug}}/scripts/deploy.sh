@@ -26,7 +26,7 @@ cp "${TRAVIS_BUILD_DIR}/Results/${TRAVIS_COMMIT}.json" "${HOME}/${DEPLOY_BRANCH}
 # create the report pointing to the history stored in deploy branch
 # need to be in build directory to access git history
 cd "${TRAVIS_BUILD_DIR}"
-memote --directory="${HOME}/${DEPLOY_BRANCH}/Results/" --filename="${HOME}/${DEPLOY_BRANCH}/index.html" report
+memote report history "${HOME}/${DEPLOY_BRANCH}/Results/" --filename="${HOME}/${DEPLOY_BRANCH}/index.html"
 
 #add, commit and push files
 cd "${HOME}/${DEPLOY_BRANCH}"
