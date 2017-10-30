@@ -41,7 +41,7 @@ def add_yaml(sbml_path, yaml_path):
     LOGGER.info("Reading SBML '%s'.", sbml_path)
     model = read_sbml_model(sbml_path)
     LOGGER.info("Writing YAML '%s'.", yaml_path)
-    save_yaml_model(model, yaml_path)
+    save_yaml_model(model, yaml_path, sort=True)
     # Use subprocess rather than gitpython because gitpython cannot get a lock
     # on the git DB and thus raises an exception.
     check_output(["git", "add", yaml_path])
