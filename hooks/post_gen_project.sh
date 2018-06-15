@@ -15,11 +15,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -e
+set -ue
 
 # copy the model file
 model_path="{{ cookiecutter.model_path }}"
-echo "Post-gen path '${model_path}'; PWD: '${PWD}'"
 if [[ "${model_path}" != "default" ]]; then
     target=$(basename "${model_path}")
     echo "copying '${model_path}' -> '${target}'"
