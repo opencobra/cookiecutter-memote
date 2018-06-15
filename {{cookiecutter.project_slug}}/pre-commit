@@ -28,7 +28,8 @@ import os.path as osp
 from six.moves import configparser
 from subprocess import check_output
 
-from cobra.io import read_sbml_model, save_yaml_model
+from cobra.io import read_sbml_model, save_yaml_model, \
+    save_json_model, save_matlab_model
 
 LOGGER = logging.getLogger(__name__)
 config = configparser.ConfigParser()
@@ -36,14 +37,20 @@ config.read('memote.ini')
 MEMOTE_MODEL = osp.basename(config["memote"]["model"])
 
 
-def add_yaml(sbml_path, yaml_path):
+def add_file(sbml_path, file_path, type):
     LOGGER.info("Reading SBML '%s'.", sbml_path)
     model = read_sbml_model(sbml_path)
-    LOGGER.info("Writing YAML '%s'.", yaml_path)
-    save_yaml_model(model, yaml_path, sort=True)
+    LOGGER.info("Writing {} '{}'.".format(type.upper(), file_path))
+    if type == 'yaml':
+        save_yaml_model(model, file_path, sort=True)
+    if type == 'json':
+        save_json_model(model, file_path)
+    if type == 'mat':
+        save_matlab_model(model, file_path)
+
     # Use subprocess rather than gitpython because gitpython cannot get a lock
     # on the git DB and thus raises an exception.
-    check_output(["git", "add", yaml_path])
+    check_output(["git", "add", file_path])
 
 
 def main():
@@ -51,8 +58,22 @@ def main():
     if not osp.exists(in_path):
         LOGGER.info("Model '%s' not found, skipping YAML addition.", in_path)
         return
-    out_path = osp.splitext(MEMOTE_MODEL)[0] + ".yml"
-    add_yaml(in_path, out_path)
+    if config["memote"]["yaml"] != '':
+        yaml_path = osp.basename(config["memote"]["yaml"])
+    else:
+        yaml_path = osp.splitext(MEMOTE_MODEL)[0] + ".yml"
+    add_file(in_path, yaml_path)
+    if config["memote"].getboolean("write_alt"):
+        if config["memote"]["json"] != '':
+            json_path = osp.basename(config["memote"]["json"])
+        else:
+            json_path = osp.splitext(MEMOTE_MODEL)[0] + ".yml"
+        add_file(in_path, json_path)
+        if config["memote"]["mat"] != '':
+            mat_path = osp.basename(config["memote"]["mat"])
+        else:
+            mat_path = osp.splitext(MEMOTE_MODEL)[0] + ".yml"
+        add_file(in_path, mat_path)
 
 
 if __name__ == "__main__":
