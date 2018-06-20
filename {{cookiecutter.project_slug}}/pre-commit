@@ -28,8 +28,7 @@ import os.path as osp
 from six.moves import configparser
 from subprocess import check_output
 
-from cobra.io import read_sbml_model, save_yaml_model, \
-    save_json_model, save_matlab_model
+from cobra.io import read_sbml_model, save_yaml_model
 
 LOGGER = logging.getLogger(__name__)
 config = configparser.ConfigParser()
