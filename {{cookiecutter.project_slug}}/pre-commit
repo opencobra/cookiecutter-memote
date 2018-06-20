@@ -53,7 +53,7 @@ def main():
     if not osp.exists(in_path):
         LOGGER.info("Model '%s' not found, skipping YAML addition.", in_path)
         return
-    if config["memote"]["yaml"] != '':
+    if config["memote"]["yaml"] != 'default':
         yaml_path = osp.basename(config["memote"]["yaml"])
     else:
         yaml_path = osp.splitext(MEMOTE_MODEL)[0] + ".yml"

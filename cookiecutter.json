@@ -9,6 +9,7 @@
   "year": "{{ cookiecutter.release_date[:4] }}",
   "version": "0.1.0",
   "model": "default",
+  "yaml": "default",
   "model_path": "{{ cookiecutter.model | normalize }}",
   "_extensions": [
     "memote.MemoteExtension"
