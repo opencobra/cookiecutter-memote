@@ -57,7 +57,7 @@ def main():
         yaml_path = osp.basename(config["memote"]["yaml"])
     else:
         yaml_path = osp.splitext(MEMOTE_MODEL)[0] + ".yml"
-    add_file(in_path, yaml_path)
+    add_file(in_path, yaml_path, 'yaml')
 
 
 if __name__ == "__main__":
