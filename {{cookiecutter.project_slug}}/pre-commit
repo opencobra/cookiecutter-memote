@@ -43,10 +43,6 @@ def add_file(sbml_path, file_path, type):
     LOGGER.info("Writing {} '{}'.".format(type.upper(), file_path))
     if type == 'yaml':
         save_yaml_model(model, file_path, sort=True)
-    if type == 'json':
-        save_json_model(model, file_path)
-    if type == 'mat':
-        save_matlab_model(model, file_path)
 
     # Use subprocess rather than gitpython because gitpython cannot get a lock
     # on the git DB and thus raises an exception.
@@ -63,17 +59,6 @@ def main():
     else:
         yaml_path = osp.splitext(MEMOTE_MODEL)[0] + ".yml"
     add_file(in_path, yaml_path)
-    if config["memote"].getboolean("write_alt"):
-        if config["memote"]["json"] != '':
-            json_path = osp.basename(config["memote"]["json"])
-        else:
-            json_path = osp.splitext(MEMOTE_MODEL)[0] + ".yml"
-        add_file(in_path, json_path)
-        if config["memote"]["mat"] != '':
-            mat_path = osp.basename(config["memote"]["mat"])
-        else:
-            mat_path = osp.splitext(MEMOTE_MODEL)[0] + ".yml"
-        add_file(in_path, mat_path)
 
 
 if __name__ == "__main__":
