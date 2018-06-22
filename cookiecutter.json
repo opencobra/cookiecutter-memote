@@ -3,7 +3,7 @@
   "email": "author@place.edu",
   "github_username": "authorname",
   "project_name": "Memote model repository",
-  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
   "project_short_description": "Create a repository for maintaining a genome-scale metabolic model.",
   "release_date": "{% now 'local' %}",
   "year": "{{ cookiecutter.release_date[:4] }}",

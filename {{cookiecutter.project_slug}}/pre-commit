@@ -30,17 +30,15 @@ from subprocess import check_output
 
 from cobra.io import read_sbml_model, save_yaml_model
 
+
 LOGGER = logging.getLogger(__name__)
-config = configparser.ConfigParser()
-config.read('memote.ini')
-MEMOTE_MODEL = osp.basename(config["memote"]["model"])
 
 
 def add_file(sbml_path, file_path, file_type):
     LOGGER.info("Reading SBML '%s'.", sbml_path)
     model = read_sbml_model(sbml_path)
     LOGGER.info("Writing {} '{}'.".format(file_type.upper(), file_path))
-    if file_type == 'yaml':
+    if file_type == "yaml":
         save_yaml_model(model, file_path, sort=True)
     # Use subprocess rather than gitpython because gitpython cannot get a lock
     # on the git DB and thus raises an exception.
@@ -48,15 +46,24 @@ def add_file(sbml_path, file_path, file_type):
 
 
 def main():
-    in_path = MEMOTE_MODEL
-    if not osp.exists(in_path):
-        LOGGER.info("Model '%s' not found, skipping YAML addition.", in_path)
+    config_path = osp.join(
+        osp.dirname(__file__), osp.pardir, osp.pardir, "memote.ini")
+    if not osp.exists(config_path):
+        LOGGER.warning(
+            "No configuration file found. Expected '%s'. Skipping pre-commit.",
+            config_path)
         return
-    if config["pre_commit"]["yaml"] == 'default':
-        yaml_path = osp.splitext(MEMOTE_MODEL)[0] + ".yml"
+    config = configparser.ConfigParser()
+    config.read(config_path)
+    model_path = osp.basename(config["memote"]["model"])
+    if not osp.exists(model_path):
+        LOGGER.info("Model '%s' not found, skipping YAML addition.", model_path)
+        return
+    if config["pre_commit"]["yaml"] == "default":
+        yaml_path = osp.splitext(model_path)[0] + ".yml"
     else:
         yaml_path = osp.basename(config["pre_commit"]["yaml"])
-    add_file(in_path, yaml_path, 'yaml')
+    add_file(model_path, yaml_path, "yaml")
 
 
 if __name__ == "__main__":

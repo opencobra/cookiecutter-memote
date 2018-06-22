@@ -1,20 +1,26 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -eu
+
+project="${1:-memote-model-repository}"
 
 cleanup() {
-    rm -rf memote_model_repository
+    rm -rf "${project}"
 }
 trap cleanup EXIT
 
 
 type cookiecutter
 
-echo "Running test script..."
 cookiecutter . --no-input
+
 (
-    cd ./memote_model_repository
-#    tox  # need a model that passes all tests first
+    echo "Running test script..."
+    cd "./${project}"
+    echo "Test for 'memote.ini'."
+    test -f "memote.ini"
+    echo "Test for 'model.xml'."
+    test -f "model.xml"
 )
 
 echo Done
