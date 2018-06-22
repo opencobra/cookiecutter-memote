@@ -55,14 +55,15 @@ def main():
         return
     config = configparser.ConfigParser()
     config.read(config_path)
-    model_path = osp.basename(config["memote"]["model"])
+    model_path = osp.basename(config.get("memote", "model"))
     if not osp.exists(model_path):
         LOGGER.info("Model '%s' not found, skipping YAML addition.", model_path)
         return
-    if config["pre_commit"]["yaml"] == "default":
+    yaml_path = config.get("pre_commit", "yaml")
+    if yaml_path == "default":
         yaml_path = osp.splitext(model_path)[0] + ".yml"
     else:
-        yaml_path = osp.basename(config["pre_commit"]["yaml"])
+        yaml_path = osp.basename(yaml_path)
     add_file(model_path, yaml_path, "yaml")
 
 
