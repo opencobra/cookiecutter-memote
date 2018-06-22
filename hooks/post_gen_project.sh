@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -ue
+set -eu
 
 # copy the model file
 model_path="{{ cookiecutter.model_path }}"
@@ -43,7 +43,7 @@ deploy_branch="gh-pages"
 git checkout --orphan "${deploy_branch}" > /dev/null
 #git checkout -b "${deploy_branch}" > /dev/null
 git rm -r --cached "." > /dev/null
-old_ignore=${GLOBIGNORE}
+old_ignore=${GLOBIGNORE:-}
 GLOBIGNORE=".git"
 rm -rf * .*
 GLOBIGNORE=${old_ignore}
