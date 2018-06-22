@@ -30,7 +30,7 @@ fi
 git init
 git config user.email "{{ cookiecutter.email }}"
 git config user.name "{{ cookiecutter.full_name }}"
-# deploy hoooks
+# deploy hooks
 mv "pre-commit" ".git/hooks/"
 
 git add "." > "/dev/null"

@@ -25,35 +25,46 @@ from __future__ import absolute_import
 
 import logging
 import os.path as osp
+from six.moves import configparser
 from subprocess import check_output
 
 from cobra.io import read_sbml_model, save_yaml_model
 
+
 LOGGER = logging.getLogger(__name__)
-MEMOTE_MODEL = osp.basename("{% if cookiecutter.model == "default" -%}
-model.xml
-{%- else -%}
-{{ cookiecutter.model | basename }}
-{%- endif %}")
 
 
-def add_yaml(sbml_path, yaml_path):
+def add_file(sbml_path, file_path, file_type):
     LOGGER.info("Reading SBML '%s'.", sbml_path)
     model = read_sbml_model(sbml_path)
-    LOGGER.info("Writing YAML '%s'.", yaml_path)
-    save_yaml_model(model, yaml_path, sort=True)
+    LOGGER.info("Writing {} '{}'.".format(file_type.upper(), file_path))
+    if file_type == "yaml":
+        save_yaml_model(model, file_path, sort=True)
     # Use subprocess rather than gitpython because gitpython cannot get a lock
     # on the git DB and thus raises an exception.
-    check_output(["git", "add", yaml_path])
+    check_output(["git", "add", file_path])
 
 
 def main():
-    in_path = MEMOTE_MODEL
-    if not osp.exists(in_path):
-        LOGGER.info("Model '%s' not found, skipping YAML addition.", in_path)
+    config_path = osp.join(
+        osp.dirname(__file__), osp.pardir, osp.pardir, "memote.ini")
+    if not osp.exists(config_path):
+        LOGGER.warning(
+            "No configuration file found. Expected '%s'. Skipping pre-commit.",
+            config_path)
         return
-    out_path = osp.splitext(MEMOTE_MODEL)[0] + ".yml"
-    add_yaml(in_path, out_path)
+    config = configparser.ConfigParser()
+    config.read(config_path)
+    model_path = osp.basename(config.get("memote", "model"))
+    if not osp.exists(model_path):
+        LOGGER.info("Model '%s' not found, skipping YAML addition.", model_path)
+        return
+    yaml_path = config.get("pre_commit", "yaml")
+    if yaml_path == "default":
+        yaml_path = osp.splitext(model_path)[0] + ".yml"
+    else:
+        yaml_path = osp.basename(yaml_path)
+    add_file(model_path, yaml_path, "yaml")
 
 
 if __name__ == "__main__":
