@@ -36,13 +36,12 @@ config.read('memote.ini')
 MEMOTE_MODEL = osp.basename(config["memote"]["model"])
 
 
-def add_file(sbml_path, file_path, type):
+def add_file(sbml_path, file_path, file_type):
     LOGGER.info("Reading SBML '%s'.", sbml_path)
     model = read_sbml_model(sbml_path)
-    LOGGER.info("Writing {} '{}'.".format(type.upper(), file_path))
-    if type == 'yaml':
+    LOGGER.info("Writing {} '{}'.".format(file_type.upper(), file_path))
+    if file_type == 'yaml':
         save_yaml_model(model, file_path, sort=True)
-
     # Use subprocess rather than gitpython because gitpython cannot get a lock
     # on the git DB and thus raises an exception.
     check_output(["git", "add", file_path])
@@ -53,10 +52,10 @@ def main():
     if not osp.exists(in_path):
         LOGGER.info("Model '%s' not found, skipping YAML addition.", in_path)
         return
-    if config["memote"]["yaml"] != 'default':
-        yaml_path = osp.basename(config["memote"]["yaml"])
-    else:
+    if config["pre_commit"]["yaml"] == 'default':
         yaml_path = osp.splitext(MEMOTE_MODEL)[0] + ".yml"
+    else:
+        yaml_path = osp.basename(config["pre_commit"]["yaml"])
     add_file(in_path, yaml_path, 'yaml')
 
 
