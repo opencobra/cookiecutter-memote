@@ -17,13 +17,11 @@
 
 from __future__ import absolute_import
 
-from os.path import isabs, exists, isfile
+from os.path import isfile
 
-MODEL_PATH = "{{ cookiecutter.model }}"
+MODEL_PATH = "{{ cookiecutter.model_path }}"
 
 
 if MODEL_PATH != "default":
-    if not (isabs(MODEL_PATH) and exists(MODEL_PATH) and isfile(MODEL_PATH)):
-        raise ValueError(
-            "'model' value must be an absolute path to an existing file;"
-            " got '{}' instead.".format(MODEL_PATH))
+    if not isfile(MODEL_PATH):
+        ValueError("'{}' is not an existing file.".format(MODEL_PATH))

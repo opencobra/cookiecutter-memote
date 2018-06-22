@@ -15,10 +15,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -e
+set -eu
 
 # copy the model file
-model_path="{{ cookiecutter.model }}"
+model_path="{{ cookiecutter.model_path }}"
 if [[ "${model_path}" != "default" ]]; then
     target=$(basename "${model_path}")
     echo "copying '${model_path}' -> '${target}'"
@@ -43,7 +43,7 @@ deploy_branch="gh-pages"
 git checkout --orphan "${deploy_branch}" > /dev/null
 #git checkout -b "${deploy_branch}" > /dev/null
 git rm -r --cached "." > /dev/null
-old_ignore=${GLOBIGNORE}
+old_ignore=${GLOBIGNORE:-}
 GLOBIGNORE=".git"
 rm -rf * .*
 GLOBIGNORE=${old_ignore}
@@ -54,6 +54,4 @@ git add --all "."
 git commit -m "feat: add initial \`${deploy_branch}\` structure"
 git checkout "master" > "/dev/null"
 
-# Push the deploy branch first since master push will trigger travis and require
-# the deploy branch.
 git remote add "origin" "git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git"
