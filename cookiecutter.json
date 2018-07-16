@@ -10,6 +10,7 @@
   "version": "0.1.0",
   "model": "default",
   "model_path": "{{ cookiecutter.model | normalize }}",
+  "deployment": "gh-pages",
   "yaml": "default",
   "_extensions": [
     "memote.MemoteExtension"

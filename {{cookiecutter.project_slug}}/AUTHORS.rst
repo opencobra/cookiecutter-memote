@@ -5,7 +5,7 @@ Credits
 Model Maintainer
 ----------------
 
-* {{ cookiecutter.full_name }} <{{ cookiecutter.email }}>
+* `{{ cookiecutter.full_name }} <{{ cookiecutter.email }}>`_
 
 Contributors
 ------------
