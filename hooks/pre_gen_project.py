@@ -17,11 +17,24 @@
 
 from __future__ import absolute_import
 
+import logging
+import sys
 from os.path import isfile
 
-MODEL_PATH = "{{ cookiecutter.model_path }}"
+
+LOGGER = logging.getLogger("pre-gen")
 
 
-if MODEL_PATH != "default":
-    if not isfile(MODEL_PATH):
-        ValueError("'{}' is not an existing file.".format(MODEL_PATH))
+def main(model_path):
+    if model_path != "default":
+        LOGGER.debug("Checking model existence.")
+        if not isfile(model_path):
+            LOGGER.critical("File '%s' not found.", model_path)
+            return 1
+
+
+if __name__ == "__main__":
+    logging.basicConfig(
+        level="INFO", format="[%(name)s][%(levelname)s] %(message)s")
+    sys.exit(main("{{ cookiecutter.model_path }}"))
+
