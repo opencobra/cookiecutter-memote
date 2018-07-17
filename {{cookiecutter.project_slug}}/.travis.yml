@@ -1,24 +1,23 @@
 language: python
 sudo: false
 python: 3.5
+
 cache:
   pip: true
+
 git:
   depth: false
-env:
-  global:
-  - DEPLOY_BRANCH="gh-pages"
+
+branches:
+  except:
+    - "{{ cookiecutter.deployment }}"
 
 before_install:
   - pip install --upgrade pip setuptools wheel
-install:
-  - pip install memote
 
-# Per default configuration, this will create a JSON file in `Results/`.
+install:
+  - pip install --upgrade memote
+
 script:
   - git checkout "${TRAVIS_BRANCH}"
-  - memote run
-
-# Changed from 'deploy' to 'after_script' so that we deploy even after failures.
-after_script:
   - ./scripts/travis_deploy.sh

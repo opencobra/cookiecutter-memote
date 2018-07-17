@@ -53,7 +53,7 @@ def main(model_path):
     repo.head.reference = git.Head(repo, "refs/heads/{{ cookiecutter.deployment }}")
     # Remove unnecessary files.
     repo.git.rm("-r", "--cached", ".")
-    ignore = {".git", "memote.ini"}
+    ignore = {".git", "memote.ini", ".travis.yml"}
     for entry in os.scandir():
         if entry.name in ignore:
             continue
@@ -67,7 +67,7 @@ def main(model_path):
     open("results/.keep", "w", encoding="utf-8").close()
     with open("index.html", "w", encoding="utf-8") as file_handle:
         file_handle.write("Placeholder.")
-    index.add(["memote.ini", "results/.keep", "index.html"])
+    index.add(["memote.ini", ".travis.yml", "results/.keep", "index.html"])
     repo.index.commit("feat: add initial deployment structure",
                       parent_commits=None)
     repo.heads.master.checkout()
