@@ -22,6 +22,7 @@ import os
 import shutil
 from io import open
 from os.path import basename
+from subprocess import check_call
 
 import git
 
@@ -77,6 +78,11 @@ def main(model_path):
         "origin",
         "git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git"
     )
+
+    LOGGER.info("Run memote on the primary commit.")
+    check_call(["memote", "run", "--pytest-args", "--verbosity=0 --tb=no"])
+    LOGGER.info("Generate the first history report.")
+    check_call(["memote", "report", "history"])
 
 
 if __name__ == "__main__":
