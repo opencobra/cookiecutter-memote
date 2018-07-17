@@ -21,7 +21,7 @@ import logging
 import os
 import shutil
 from io import open
-from os.path import basename
+from os.path import basename, isfile
 from subprocess import check_call
 
 import git
@@ -55,34 +55,34 @@ def main(model_path):
     # Remove unnecessary files.
     repo.git.rm("-r", "--cached", ".")
     ignore = {".git", "memote.ini", ".travis.yml"}
-    for entry in os.scandir():
-        if entry.name in ignore:
+    for entry in os.listdir("."):
+        if entry in ignore:
             continue
-        if entry.is_file():
+        if isfile(entry):
             os.remove(entry)
         else:
             shutil.rmtree(entry)
     # Add expected files.
-    index = repo.index
     os.mkdir("results")
     open("results/.keep", "w", encoding="utf-8").close()
-    with open("index.html", "w", encoding="utf-8") as file_handle:
-        file_handle.write("Placeholder.")
-    index.add(["memote.ini", ".travis.yml", "results/.keep", "index.html"])
+    repo.index.add(["memote.ini", ".travis.yml", "results/.keep"])
     repo.index.commit("feat: add initial deployment structure",
                       parent_commits=None)
-    repo.heads.master.checkout()
-
     # Add remote according to cookiecutter value.
     repo.create_remote(
         "origin",
         "git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git"
     )
 
+    repo.heads.master.checkout()
     LOGGER.info("Run memote on the primary commit.")
     check_call(["memote", "run", "--pytest-args", "--verbosity=0 --tb=no"])
+    repo.heads["{{ cookiecutter.deployment }}"].checkout()
     LOGGER.info("Generate the first history report.")
     check_call(["memote", "report", "history"])
+    repo.index.add(["index.html"])
+    repo.index.commit("feat: initial history report")
+    repo.heads.master.checkout()
 
 
 if __name__ == "__main__":
