@@ -1,3 +1,5 @@
+[![memote tested](https://img.shields.io/badge/memote-tested-blue.svg?style=plastic)](https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug }})
+
 # {{ cookiecutter.project_name }}
 
 Congratulations! You successfully set up your genome-scale metabolic model
