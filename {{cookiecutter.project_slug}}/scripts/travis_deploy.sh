@@ -33,7 +33,7 @@ memote report history --filename="${output}"
 
 # Add, commit and push the files.
 git add "${output}"
-git commit -m "Travis report #${TRAVIS_BUILD_NUMBER}"
+git commit -m "Travis report # ${TRAVIS_BUILD_NUMBER}"
 git push --quiet "https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git" "${deployment}" > /dev/null
 
 echo "Your new report will be visible at https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug }} in a moment."
