@@ -47,12 +47,18 @@ def main(model_path):
         writer.release()
     shutil.move("pre-commit", ".git/hooks/")
     repo.git.add(".")
-    repo.index.commit("feat: add initial structure for the model repository")
+    check_call(
+        ["git", "commit",
+         "-m", "feat: add initial structure for the model repository"]
+    )
 
     # Set up the deployment branch.
     LOGGER.info("Configuring the deployment branch.")
-    repo.head.reference = git.Head(repo, "refs/heads/{{ cookiecutter.deployment }}")
+    check_call(
+        ["git", "checkout", "--orphan", "{{ cookiecutter.deployment }}"]
+    )
     # Remove unnecessary files.
+    LOGGER.info("Removing unnecessary files.")
     repo.git.rm("-r", "--cached", ".")
     ignore = {".git", "memote.ini", ".travis.yml"}
     for entry in os.listdir("."):
@@ -63,15 +69,18 @@ def main(model_path):
         else:
             shutil.rmtree(entry)
     # Add expected files.
+    LOGGER.info("Adding expected files such as memote.ini and .travis.yml.")
     os.mkdir("results")
     open("results/.keep", "w", encoding="utf-8").close()
     repo.index.add(["memote.ini", ".travis.yml", "results/.keep"])
-    repo.index.commit("feat: add initial deployment structure",
-                      parent_commits=None)
+    check_call(
+        ["git", "commit", "-m", "feat: add initial deployment structure"]
+    )
     # Add remote according to cookiecutter value.
     repo.create_remote(
         "origin",
-        "git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git"
+        "git@github.com:{{ cookiecutter.github_username }}"
+        "/{{ cookiecutter.project_slug }}.git"
     )
 
     repo.heads.master.checkout()
@@ -81,7 +90,9 @@ def main(model_path):
     LOGGER.info("Generate the first history report.")
     check_call(["memote", "report", "history"])
     repo.index.add(["index.html"])
-    repo.index.commit("feat: initial history report")
+    check_call(
+        ["git", "commit", "-m", "feat: initial history report"]
+    )
     repo.heads.master.checkout()
 
 
