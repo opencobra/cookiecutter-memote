@@ -48,15 +48,14 @@ def main(model_path):
     shutil.move("pre-commit", ".git/hooks/")
     repo.git.add(".")
     check_call(
-        ["git", "commit", "-m", "feat: add initial structure for the model repository"], 
-        shell=True
+        ["git", "commit",
+         "-m", "feat: add initial structure for the model repository"]
     )
 
     # Set up the deployment branch.
     LOGGER.info("Configuring the deployment branch.")
     check_call(
-    ["git", "checkout", "--orphan", "{{ cookiecutter.deployment }}"], 
-    shell=True
+        ["git", "checkout", "--orphan", "{{ cookiecutter.deployment }}"]
     )
     # Remove unnecessary files.
     LOGGER.info("Removing unnecessary files.")
@@ -75,13 +74,13 @@ def main(model_path):
     open("results/.keep", "w", encoding="utf-8").close()
     repo.index.add(["memote.ini", ".travis.yml", "results/.keep"])
     check_call(
-    ["git", "commit", "-m", "feat: add initial deployment structure"], 
-    shell=True
+        ["git", "commit", "-m", "feat: add initial deployment structure"]
     )
     # Add remote according to cookiecutter value.
     repo.create_remote(
         "origin",
-        "git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git"
+        "git@github.com:{{ cookiecutter.github_username }}"
+        "/{{ cookiecutter.project_slug }}.git"
     )
 
     repo.heads.master.checkout()
@@ -92,8 +91,7 @@ def main(model_path):
     check_call(["memote", "report", "history"])
     repo.index.add(["index.html"])
     check_call(
-        ["git", "commit", "-m", "feat: initial history report"], 
-        shell=True
+        ["git", "commit", "-m", "feat: initial history report"]
     )
     repo.heads.master.checkout()
 
