@@ -36,7 +36,8 @@ def main(model_path):
         target = basename(model_path)
         LOGGER.info("copying '{}' -> '{}'".format(model_path, target))
         shutil.copy2(model_path, target)
-        os.remove("model.xml")
+        if target != "model.xml":
+            os.remove("model.xml")
 
     # Set up the repository with the master branch.
     LOGGER.info("Configuring git repository.")
