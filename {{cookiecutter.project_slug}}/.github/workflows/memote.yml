@@ -24,7 +24,7 @@ jobs:
         python -m pip install memote==0.13.0
     - name: Run memote on deployment branch
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        HEAD_REF: ${{ github.ref_name }}
+        GITHUB_TOKEN: {{ '${{ secrets.GITHUB_TOKEN }}' }}
+        HEAD_REF: {{ '${{ github.ref_name }}' }}
       run: ./scripts/ghactions_deploy.sh
 

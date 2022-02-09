@@ -36,6 +36,6 @@ jobs:
     - name: Post PR comment
       uses: JoseThen/comment-pr@v1.1.1
       with:
-        comment: Memote diff was generated at https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/diff${{ github.sha }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        comment: {{ 'Memote diff was generated at https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/diff${{ github.sha }}' }}
+        GITHUB_TOKEN: {{ '${{ secrets.GITHUB_TOKEN }}' }}
 
