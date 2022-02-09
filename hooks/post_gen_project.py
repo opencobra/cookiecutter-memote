@@ -61,7 +61,7 @@ def main(model_path):
     # Remove unnecessary files.
     LOGGER.info("Removing unnecessary files.")
     repo.git.rm("-r", "--cached", ".")
-    ignore = {".git", "memote.ini", ".travis.yml"}
+    ignore = {".git", "memote.ini", ".github"}
     for entry in os.listdir("."):
         if entry in ignore:
             continue
@@ -70,10 +70,10 @@ def main(model_path):
         else:
             shutil.rmtree(entry)
     # Add expected files.
-    LOGGER.info("Adding expected files such as memote.ini and .travis.yml.")
+    LOGGER.info("Adding expected files such as memote.ini and .github/")
     os.mkdir("results")
     open("results/.keep", "w", encoding="utf-8").close()
-    repo.index.add(["memote.ini", ".travis.yml", "results/.keep"])
+    repo.index.add(["memote.ini", ".github", "results/.keep"])
     check_call(
         ["git", "commit", "-m", "feat: add initial deployment structure"]
     )
