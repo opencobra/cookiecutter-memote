@@ -36,6 +36,6 @@ memote report history --filename="${output}"
 # Add, commit and push the files.
 git add "${output}"
 git commit -m "Github actions report # ${GITHUB_SHA}"
-git push --quiet "https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "${deployment}" > /dev/null
+git push --quiet "https://github.com/${GITHUB_REPOSITORY}.git" "${deployment}" > /dev/null
 
 echo "Your new report will be visible at https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug }} in a moment."
