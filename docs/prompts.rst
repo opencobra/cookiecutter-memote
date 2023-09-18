@@ -37,11 +37,3 @@ version
 
 model
     The
-
-Options
--------
-
-The following package configuration options set up different features for your project.
-
-use_pypi_deployment_with_travis
-    Whether to use PyPI deployment with Travis.

@@ -26,9 +26,8 @@ Currently, we can enable continuous model testing using Travis CI. All you have
 to do is:
 
 1. Create a [GitHub](https://github.com/) account.
-2. Create an account at https://travis-ci.org using your GitHub account.
-3. Run `memote online`.
-4. A history report will be publicly visible at https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug }}.
+2. Run `memote online`.
+3. A history report will be publicly visible at https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug }}.
 
 ---
 
